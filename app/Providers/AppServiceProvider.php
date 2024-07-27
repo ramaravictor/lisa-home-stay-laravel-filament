@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('*', function ($view) {
-            $rooms = Room::all();
+            $rooms = Room::where('availability', true)->get();
             $view->with('rooms', $rooms);
         });
     }

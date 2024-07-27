@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->string('customer_name');
-            $table->enum('booking_type', ['room', 'rental']);
-            $table->unsignedBigInteger('item_id');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
+            $table->date('check_in');
+            $table->date('check_out');
+            $table->string('room');
+            $table->integer('guest');
+            $table->enum('status', ['ongoing', 'complete'])->default('ongoing');
             $table->timestamps();
         });
     }

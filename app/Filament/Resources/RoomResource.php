@@ -19,6 +19,7 @@ use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class RoomResource extends Resource
 {
@@ -68,7 +69,7 @@ class RoomResource extends Resource
                             ->disk('public')
                             ->image(),
                         Toggle::make('availability')
-                            ->label('Available')
+                            ->label('Status')
                             ->default(true),
                     ])->columns(2),
             ]);
@@ -86,11 +87,18 @@ class RoomResource extends Resource
                 TextColumn::make('price')->sortable(),
                 BooleanColumn::make('availability')
                     ->label('Available')
-                    ->trueColor('green')
-                    ->falseColor('red'),
-                ImageColumn::make('image')
-                    ->label('Room Image')
-                    ->disk('public'),
+                    ->trueIcon('heroicon-s-check-circle')
+                    ->falseIcon('heroicon-s-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger')
+                    ->tooltip(fn ($record) => $record->availability ? 'Klik untuk ubah' : 'Klik untuk ubah')
+                    ->action(function (Model $record) {
+                        $record->availability = ! $record->availability;
+                        $record->save();
+                    }),
+                // ImageColumn::make('image')
+                //     ->label('Room Image')
+                //     ->disk('public'),
                 TextColumn::make('created_at')->label('Created')->dateTime(),
             ])
 

@@ -4,8 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BookingResource\Pages;
 use App\Models\Booking;
-use App\Models\Rental;
-use App\Models\Room;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -13,8 +11,10 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class BookingResource extends Resource
 {
@@ -32,35 +32,31 @@ class BookingResource extends Resource
             ->schema([
                 Card::make()
                     ->schema([
-                        TextInput::make('customer_name')->required()->maxLength(255),
-                        Select::make('booking_type')
-                            ->options([
-                                'room' => 'Room',
-                                'rental' => 'Rental',
-                            ])
-                            ->reactive()
+                        TextInput::make('customer_name')
+                            ->label('Customer Name')
                             ->required(),
-                        Select::make('item_id')
-                            ->label('Item')
-                            ->options(function (callable $get) {
-                                if ($get('booking_type') === 'room') {
-                                    return Room::all()->pluck('name', 'id');
-                                } elseif ($get('booking_type') === 'rental') {
-                                    return Rental::all()->pluck('name', 'id');
-                                }
+                        TextInput::make('room')
+                            ->label('No. Room')
+                            ->required(),
+                        DatePicker::make('check_in')
+                            ->label('Check In')
+                            ->required(),
+                        DatePicker::make('check_out')
+                            ->label('Check Out')
+                            ->required(),
 
-                                return [];
-                            })
-                            ->required(),
-                        DatePicker::make('start_date')->required(),
-                        DatePicker::make('end_date')->required(),
+                        TextInput::make('guest')
+                            ->label('Guest')
+                            ->required()
+                            ->numeric(),
                         Select::make('status')
+                            ->label('Status')
                             ->options([
-                                'pending' => 'Pending',
-                                'confirmed' => 'Confirmed',
-                                'cancelled' => 'Cancelled',
+                                'ongoing' => 'Ongoing',
+                                'complete' => 'Complete',
                             ])
-                            ->default('pending'),
+                            ->default('ongoing')
+                            ->required(),
                     ])->columns(2),
             ]);
     }
@@ -69,34 +65,37 @@ class BookingResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('customer_name')->sortable()->searchable(),
-                TextColumn::make('booking_type')->sortable()->searchable(),
-                TextColumn::make('item_id')
-                    ->label('Item')
-                    ->formatStateUsing(function ($state, $record) {
-                        if ($record->booking_type === 'room') {
-                            return Room::find($state)->name ?? 'Unknown';
-                        } elseif ($record->booking_type === 'rental') {
-                            return Rental::find($state)->name ?? 'Unknown';
+                TextColumn::make('customer_name')->sortable()->searchable()->label('Customer Name'),
+                TextColumn::make('check_in')->sortable()->label('Check In'),
+                TextColumn::make('check_out')->sortable()->label('Check Out'),
+                TextColumn::make('room')->sortable()->label('Room'),
+                TextColumn::make('guest')->sortable()->label('Guest'),
+                BadgeColumn::make('status')
+                    ->sortable()
+                    ->label('Status')
+                    ->colors([
+                        'primary' => 'ongoing',
+                        'success' => 'complete',
+                    ])
+                    ->tooltip(fn ($record) => $record->status ? 'Klik untuk ubah' : 'Klik untuk ubah')
+                    ->action(function (Model $record) {
+                        if ($record->status === 'ongoing') {
+                            $record->status = 'complete';
+                        } else {
+                            $record->status = 'ongoing';
                         }
-
-                        return 'Unknown';
+                        $record->save();
                     }),
-                TextColumn::make('start_date')->sortable(),
-                TextColumn::make('end_date')->sortable(),
-                TextColumn::make('status')->sortable(),
-                TextColumn::make('created_at')->label('Created')->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 

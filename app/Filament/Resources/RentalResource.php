@@ -16,6 +16,7 @@ use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class RentalResource extends Resource
 {
@@ -60,10 +61,17 @@ class RentalResource extends Resource
                 TextColumn::make('price')->sortable(),
                 BooleanColumn::make('available')
                     ->label('Available')
-                    ->trueColor('green')
-                    ->falseColor('red'),
+                    ->trueIcon('heroicon-s-check-circle')
+                    ->falseIcon('heroicon-s-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger')
+                    ->tooltip(fn ($record) => $record->available ? 'Klik untuk ubah' : 'Klik untuk ubah')
+                    ->action(function (Model $record) {
+                        $record->available = ! $record->available;
+                        $record->save();
+                    }),
                 ImageColumn::make('image')
-                    ->label('Room Image')
+                    ->label('Image')
                     ->disk('public'),
 
             ])

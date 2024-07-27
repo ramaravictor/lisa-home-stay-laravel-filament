@@ -24,7 +24,7 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-// Route::get('/rooms', [RentalController::class, 'index'])->name('rooms');
+// Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
 Route::get('/rooms/{id}', [RoomController::class, 'show'])->name('rooms.show');
 
 Route::get('/rental', [RentalController::class, 'index'])->name('rental');

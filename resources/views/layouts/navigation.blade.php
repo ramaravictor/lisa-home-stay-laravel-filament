@@ -16,9 +16,6 @@
                 <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="text-xl text-white">
                     {{ __('Home') }}
                 </x-nav-link>
-                {{-- <x-nav-link :href="route('rooms')" :active="request()->routeIs('rooms')" class="text-xl text-white">
-                    {{ __('Rooms') }}
-                </x-nav-link> --}}
 
                 <x-dropdown align="left" width="48">
                     <x-slot name="trigger">
@@ -39,15 +36,13 @@
                     </x-slot>
                     <x-slot name="content">
                         @foreach ($rooms as $room)
-                            <x-dropdown-link :href="route('rooms.show', $room->id)" :active="request()->routeIs('rooms')"
+                            <x-dropdown-link :href="route('rooms.show', $room->id)" :active="request()->routeIs('rooms.show', $room->id)"
                                 class="block px-4 py-2 text-gray-400 hover:text-gray-300">
                                 {{ $room->type }}
                             </x-dropdown-link>
                         @endforeach
                     </x-slot>
                 </x-dropdown>
-
-
 
                 <x-nav-link :href="route('rental')" :active="request()->routeIs('rental')" class="text-xl text-white">
                     {{ __('Rental') }}
@@ -124,9 +119,6 @@
             <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                 {{ __('Home') }}
             </x-responsive-nav-link>
-            {{-- <x-responsive-nav-link :href="route('rooms')" :active="request()->routeIs('rooms')">
-                {{ __('Rooms') }}
-            </x-responsive-nav-link> --}}
 
             <x-dropdown align="left" width="48">
                 <x-slot name="trigger">
