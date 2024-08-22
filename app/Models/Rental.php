@@ -10,6 +10,6 @@ class Rental extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'description', 'price', 'availability', 'images',
+        'name', 'description', 'price', 'available', 'image',
     ];
 }

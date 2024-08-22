@@ -63,11 +63,13 @@ class RoomResource extends Resource
                             ->label('Price')
                             ->required()
                             ->numeric(),
-                        FileUpload::make('image')
+                        FileUpload::make('images')
                             ->label('Room Image')
-                            ->directory('images/rooms')
+                            ->image()
                             ->disk('public')
-                            ->image(),
+                            ->directory('images/rooms')
+                            ->visibility('public')
+                            ->preserveFilenames(),
                         Toggle::make('availability')
                             ->label('Status')
                             ->default(true),
@@ -96,9 +98,9 @@ class RoomResource extends Resource
                         $record->availability = ! $record->availability;
                         $record->save();
                     }),
-                // ImageColumn::make('image')
-                //     ->label('Room Image')
-                //     ->disk('public'),
+                ImageColumn::make('images')
+                    ->label('Room Image')
+                    ->disk('public'),
                 TextColumn::make('created_at')->label('Created')->dateTime(),
             ])
 

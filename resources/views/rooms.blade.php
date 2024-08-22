@@ -3,8 +3,7 @@
         <section class="relative flex w-full h-screen">
             <div class="relative flex w-full h-screen" style="opacity: 1;">
                 <div class="relative w-full">
-                    <img src="https://res.cloudinary.com/da583h5sr/image/upload/v1670978652/web/room/room_1_cover_xzinof.png"
-                        class="object-cover w-full h-screen brightness-50">
+                    <img src="{{ Storage::url($room->images) }}" class="object-cover w-full h-screen brightness-50">
                     <!-- Adjust brightness-50 to your desired darkness level (0-100) -->
                     <div
                         class="absolute top-0 left-0 right-0 flex flex-col items-center justify-center px-8 mt-24 bottom-20 lg:px-32">

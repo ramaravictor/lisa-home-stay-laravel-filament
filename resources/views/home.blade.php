@@ -103,7 +103,7 @@
                     @foreach ($rooms as $room)
                         <div class="relative flex-1">
                             <div style="opacity: 1;">
-                                <img src="https://res.cloudinary.com/da583h5sr/image/upload/v1670978652/web/room/room_1_cover_xzinof.png"
+                                <img src="{{ Storage::url($room->images) }}"
                                     class="w-full aspect-[3/4] md:aspect-[4/3] brightness-50 object-cover">
                                 <div class="absolute bottom-0 left-0 right-0 p-4 md:p-8">
                                     <p class="text-2xl tracking-wider text-white md:text-3xl">{{ $room->type }}</p>

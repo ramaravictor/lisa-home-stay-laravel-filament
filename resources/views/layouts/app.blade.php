@@ -35,8 +35,9 @@
         {{-- WA BUTTON --}}
         <section class="fixed bottom-0 right-0 z-30 m-4">
             <a href="https://wa.me/6281234567890"
-                class="flex flex-row items-center px-6 py-2 text-white bg-green-500 rounded-full" target="_blank">
-                <div class="mr-2">
+                class="flex flex-row items-center px-2 py-2 text-white bg-green-500 rounded-full lg:py-2 lg:px-3"
+                target="_blank">
+                <div class="lg:mr-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         aria-hidden="true" role="img" class="iconify iconify--ic" width="22" height="22"
                         viewBox="0 0 24 24">
@@ -45,9 +46,10 @@
                         </path>
                     </svg>
                 </div>
-                <p class="text-lg">How can we help you?</p>
+                <p class="hidden text-lg md:block">How can we help you?</p>
             </a>
         </section>
+
 
         <!-- Include Form -->
         @include('layouts.formbooking')

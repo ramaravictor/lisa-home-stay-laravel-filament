@@ -50,29 +50,33 @@
                         <div class="relative mr-8 basis-2/5 md:mr-16">
                             <div class="w-full h-[22rem] md:h-[32rem] bg-gradient-to-r from-slate-900 to-slate-950">
                             </div>
-                            <div class="absolute top-0" style="width: 100%;"><img
-                                    src="https://ik.imagekit.io/tvlk/xpe-asset/AyJ40ZAo1DOyPyKLZ9c3RGQHTP2oT4ZXW+QmPVVkFQiXFSv42UaHGzSmaSzQ8DO5QIbWPZuF+VkYVRk6gh-Vg4ECbfuQRQ4pHjWJ5Rmbtkk=/7944451879387/Island-Hopping-3-Gilis-Snorkeling-Trip-%2528Meeting-Point-at-Gili-Trawangan%2529-11162605-17d9-4936-b799-516e633f80bd.png?tr=q-60,c-at_max,w-1280,h-720&_src=imagekit"
-                                    alt=""
+                            <div class="absolute top-0" style="width: 100%;">
+                                <img src="{{ Storage::url($rental->image) }}" alt=""
                                     class="my-4 ml-8 md:ml-16 w-full h-[20rem] md:h-[28rem] object-cover">
                             </div>
+
                         </div>
                         <div class="flex flex-col pl-0 mt-8 md:pl-24 basis-3/5">
                             <text class="text-xs uppercase">accommodation</text>
-                            <text class="text-2xl lg:mt-4 md:text-3xl text-textPrimary">{{ $rental->name }}</text>
-                            <div class="w-24 h-0.5 bg-black lg:mt-6"></div>
-                            <p class="text-2xl font-semibold tracking-wider text-black lg:py-5 md:text-3xl">
+                            <text class="py-3 text-2xl md:text-3xl text-textPrimary">{{ $rental->name }}</text>
+                            <div class="w-24 h-0.5 bg-black lg:mt-3"></div>
+                            <p class="py-3 text-2xl font-semibold tracking-wider text-black lg:py-5 md:text-3xl">
                                 Rp. {{ number_format($rental->price, 2, ',', '.') }}
                             </p>
 
-                            <div class="hidden tracking-wide description text-textSecondary text-md md:block">
+                            <div
+                                class="hidden py-3 tracking-wide lg:py-1 description text-textSecondary text-md md:block">
                                 {{ $rental->description }}</div>
                             <div class="flex flex-row justify-between lg:mt-8">
                                 <button
                                     class="underline toggle-description underline-offset-4 text-secondary md:hidden">SEE
                                     DETAILS</button>
-                                <button
-                                    class="px-4 py-2 border border-black rounded-md text-slate-950 hover:text-white hover:bg-slate-900">BOOK
-                                    NOW</button>
+                                <a href="https://wa.me/628998211377?text=Hello,%20I%20would%20like%20to%20rent%20now"
+                                    class="px-4 py-2 border border-black rounded-md text-slate-950 hover:text-white hover:bg-slate-900"
+                                    target="_blank">
+                                    BOOK NOW
+                                </a>
+
                             </div>
                         </div>
                     </div>
